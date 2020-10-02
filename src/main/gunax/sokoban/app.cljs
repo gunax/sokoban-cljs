@@ -13,9 +13,16 @@
    :target-block {:color "blue" :passable true}})
 
 (def move-count (r/atom 0))
-(def level-num (r/atom 1))
-(def the-grid (r/atom (get-in levels/levels [@level-num :level])))
-(def positions (r/atom (list (get-in levels/levels [@level-num :positions]))))
+(def level-num (r/atom 5))
+(def the-grid (r/atom '()))
+(def positions (r/atom '()))
+
+(defn reset-level []
+  (reset! the-grid (get-in levels/levels [@level-num :level]))
+  (reset! positions (list (get-in levels/levels [@level-num :positions])))
+  (reset! move-count 0))
+
+(reset-level)
 
 (defn create-real-grid [grid movables]
   "Combine a static grid and a set of moveables to create the actual grid locations"
@@ -87,8 +94,24 @@
 
 (defn game []
   [:div
-   [grid {:width 250 :height 250 :rows 8 :cols 8}]
-   [:div (str "Moves: " @move-count)]])
+   [grid {:width 250 :height 250}]
+   [:div (str "Moves: " @move-count)]
+   [:div (str "Level: " @level-num)]
+   [:span {:style {:height "100px"
+                   :width "100px"
+                   :background "cyan"}
+           :onClick #(do (swap! level-num dec)
+                         (reset-level))}
+    "Prev"]
+   [:span {:style {:height "100px"
+                   :width "100px"
+                   :background "red"}
+           :onClick #(do (swap! level-num inc)
+                           (reset-level))}
+    "Next"]
+   [:span {:style {:background "orange"}
+           :onClick reset-level}
+    "Reset"]])
 
 ;; Attach to the dom
 (rd/render
