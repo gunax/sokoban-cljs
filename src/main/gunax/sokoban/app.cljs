@@ -84,9 +84,6 @@
                                               "ArrowRight" (try-move [0 1])
                                               "Backspace" (undo-move)
                                               ())))
-(defn get-dim [v]
-  "get dimension of vector (assume rect)"
-  [(count v) (count (first v))])
 
 (defn game []
   [:div
