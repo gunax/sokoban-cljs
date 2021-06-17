@@ -1,6 +1,8 @@
 # sokoban-cljs
 Classic [Japanese game](https://en.wikipedia.org/wiki/Sokoban) in Clojurescript/reagent
 
+This is basically a big experiment using completely stateful/functional style to represent a game. Each move by the player has to adjust the game state in a deterministic fashion.
+
 You are the CYAN block
 
 The blocks are the YELLOW blocks
